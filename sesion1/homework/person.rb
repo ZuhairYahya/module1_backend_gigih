@@ -1,14 +1,12 @@
 class Person
-    attr_reader :name, :hitpoint, :attack_damage
+    attr_reader :name, :attack_damage, :chance
+    attr_accessor :hitpoint
 
-<<<<<<< HEAD
-    def initialize (name, hitpoint, attack_damage)
-=======
-    def initialize(name, hitpoint, attack_damage)
->>>>>>> 498d9ebe050a5c4269bba1c25a8f55617292da14
+    def initialize (name, hitpoint, attack_damage, chance)
         @name = name
         @hitpoint = hitpoint
         @attack_damage = attack_damage
+        @chance = chance
     end
 
     def to_s
@@ -16,13 +14,13 @@ class Person
     end
 
     def attack(other_person)
-<<<<<<< HEAD
-        other_person.take_damage(@attack_damage)
-        puts "#{@name} attack #{other_person.name} with #{@attack_damage} damage"
-=======
+        return if other_person.nil?
         puts "#{@name} attacks #{other_person.name} with #{@attack_damage} damage"
-        other_person.take_damage(@attack_damage)
->>>>>>> 498d9ebe050a5c4269bba1c25a8f55617292da14
+        unless other_person.deflect?
+            other_person.take_damage(@attack_damage) 
+            return
+        end
+        puts "#{other_person.name} deflects the attack"
     end
 
     def take_damage(damage)
@@ -34,5 +32,9 @@ class Person
             puts "#{@name} dies"
             true
         end
+    end
+
+    def deflect?
+        rand(1..100) <= @chance
     end
 end
